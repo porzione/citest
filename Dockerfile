@@ -7,11 +7,13 @@ RUN for i in $(seq 1 8); do mkdir -p /usr/share/man/man${i}; done
 RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-utils \
     ca-certificates \
+    coreutils \
     curl \
     g++ \
     gcc \
     gettext \
     gnupg2 \
+    jq \
     less \
     libc6-dev \
     make \
