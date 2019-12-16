@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     g++ \
     gcc \
     gettext \
+    git \
     gnupg2 \
     jq \
     less \
