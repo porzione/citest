@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-setuptools \
     python-wheel \
     vim-tiny \
+    wget \
     && true
 
 ### golang
@@ -41,7 +42,7 @@ RUN curl -k -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
 
 ENV GOPATH=/go
 ENV PATH="${GOPATH}/bin:/usr/local/go/bin:$PATH"
-RUN mkdir -p "${GOPATH}/src" "${GOPATH}/bin" && chmod -R 777 "${GOPATH}"
+RUN mkdir -p "${GOPATH}/src" "${GOPATH}/bin" && chmod -R 755 "${GOPATH}"
 
 ### google cloud sdk https://cloud.google.com/sdk/docs/quickstart-debian-ubuntu
 
