@@ -1,6 +1,12 @@
 FROM debian:buster-slim
 
-ENV DEBIAN_FRONTEND=noninteractive APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
+ARG SOURCE_COMMIT=""
+ARG SOURCE_BRANCH=""
+ENV IMAGE_REV=${SOURCE_BRANCH}-${SOURCE_COMMIT}
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
+
 ADD 01_nodoc /etc/dpkg/dpkg.cfg.d/
 RUN for i in $(seq 1 8); do mkdir -p /usr/share/man/man${i}; done
 
@@ -17,6 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     less \
     libc6-dev \
     make \
+    ncdu \
     nodejs \
     npm \
     openssh-client \
@@ -57,11 +64,5 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s
 RUN pip install cqlsh
 
 ### cleanup
-
-ARG SOURCE_COMMIT=""
-ARG SOURCE_BRANCH=""
-ENV IMAGE_REV=${SOURCE_BRANCH}-${SOURCE_COMMIT}
-
-RUN apt-get install ncdu
 
 RUN rm -rf /usr/share/man && apt-get clean && rm -rf /var/lib/apt/lists/
