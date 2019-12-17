@@ -58,6 +58,10 @@ RUN pip install cqlsh
 
 ### cleanup
 
+ARG SOURCE_COMMIT=""
+ARG SOURCE_BRANCH=""
+ENV IMAGE_REV=${SOURCE_BRANCH}-${SOURCE_COMMIT}
+
 RUN apt-get install ncdu
 
 RUN rm -rf /usr/share/man && apt-get clean && rm -rf /var/lib/apt/lists/
