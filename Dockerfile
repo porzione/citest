@@ -11,24 +11,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     g++ \
     gcc \
-    gettext \
     git \
     gnupg2 \
     jq \
     less \
     libc6-dev \
     make \
-    net-tools \
-    netcat-openbsd \
     nodejs \
     npm \
     openssh-client \
-    openssl \
     postgresql-client \
     python \
-    unzip \
+    python-pip \
+    python-setuptools \
+    python-wheel \
     vim-tiny \
-    wget \
     && true
 
 ### golang
@@ -56,11 +53,7 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s
 
 ### cassandra cqlsh
 
-RUN apt-get install -y --no-install-recommends \
-    python-pip \
-    python-setuptools \
-    python-wheel \
-    && pip install cqlsh
+RUN pip install cqlsh
 
 ### cleanup
 
