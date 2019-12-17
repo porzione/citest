@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     git \
     gnupg2 \
+    iputils-ping \
     jq \
     less \
     libc6-dev \
