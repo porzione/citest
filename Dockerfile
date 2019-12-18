@@ -19,17 +19,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     git \
     gnupg2 \
-    iputils-ping \
     jq \
-    kmod \
     less \
     libc6-dev \
     make \
     ncdu \
-    nodejs \
-    npm \
     openssh-client \
-    openvpn \
     postgresql-client \
     python \
     python-pip \
@@ -38,6 +33,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     vim-tiny \
     wget \
     && true
+
+### nodejs 8.x 10.x 11.x 12.x 13.x
+
+ARG NODEJS_VERSION=13.x
+RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION} | bash - && apt-get install -y nodejs
+
+### OpenVPN doesn't work in CircleCI/LXC
+#   kmod \
+#   openvpn \
+#   iputils-ping \
 
 ### golang
 
