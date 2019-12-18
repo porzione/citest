@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     nodejs \
     npm \
     openssh-client \
+    openvpn \
     postgresql-client \
     python \
     python-pip \
