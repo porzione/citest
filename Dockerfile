@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gnupg2 \
     iputils-ping \
     jq \
+    kmod \
     less \
     libc6-dev \
     make \
@@ -67,4 +68,4 @@ RUN pip install cqlsh
 
 ### cleanup
 
-RUN rm -rf /usr/share/man && apt-get clean && rm -rf /var/lib/apt/lists/
+RUN rm -rf /usr/share/man && apt-get clean && rm -rf /var/lib/apt/lists/ && rm -rf /root/.cache
