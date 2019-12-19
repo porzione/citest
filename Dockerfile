@@ -1,9 +1,5 @@
 FROM debian:buster-slim
 
-ARG SOURCE_BRANCH
-ARG SOURCE_COMMIT
-ENV IMAGE_REV=${SOURCE_BRANCH}-${SOURCE_COMMIT}
-
 ARG DEBIAN_FRONTEND=noninteractive
 ARG APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
 
@@ -77,3 +73,7 @@ RUN pip install cqlsh
 
 RUN ln -s /usr/bin/vim.tiny /usr/local/bin/vim
 RUN rm -rf /usr/share/man && apt-get clean && rm -rf /var/lib/apt/lists/ && rm -rf /root/.cache
+
+ARG SOURCE_BRANCH=""
+ARG SOURCE_COMMIT=""
+ENV IMAGE_REV=${SOURCE_BRANCH}-${SOURCE_COMMIT}
