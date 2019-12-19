@@ -73,4 +73,5 @@ RUN pip install cqlsh
 
 ### cleanup
 
+RUN ln -s /usr/bin/vim.tiny /usr/local/bin/vim
 RUN rm -rf /usr/share/man && apt-get clean && rm -rf /var/lib/apt/lists/ && rm -rf /root/.cache
