@@ -26,6 +26,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ncdu \
     openssh-client \
     postgresql-client \
+    procps \
+    psmisc \
     python \
     python-pip \
     python-setuptools \
