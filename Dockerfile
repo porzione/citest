@@ -76,7 +76,6 @@ RUN rm -rf /usr/share/man && apt-get clean && rm -rf /var/lib/apt/lists/ && rm -
 
 ARG SOURCE_BRANCH=""
 ARG SOURCE_COMMIT=""
-ENV IMAGE_REV=${SOURCE_BRANCH}-${SOURCE_COMMIT}
-RUN date +'%y%m%d_%H%M%S_%Z' > /build_date.txt
+RUN echo $(date +'%y%m%d_%H%M%S_%Z') ${SOURCE_BRANCH} ${SOURCE_COMMIT} > /build.txt
 RUN echo "export PATH=${PATH}" >> /root/.profile
 SHELL ["/bin/bash", "-c"]
