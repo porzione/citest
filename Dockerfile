@@ -54,8 +54,8 @@ RUN curl -k -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
     && rm golang.tar.gz
 
 ENV GOPATH=/go
-ENV PATH="${GOPATH}/bin:/usr/local/go/bin:$PATH"
-RUN mkdir -p "${GOPATH}/src" "${GOPATH}/bin" && chmod -R 755 "${GOPATH}"
+ENV PATH="$GOPATH/bin:/usr/local/go/bin:$PATH"
+RUN mkdir -p $GOPATH/src" $GOPATH/bin" && chmod -R 755 $GOPATH
 
 ### google cloud sdk https://cloud.google.com/sdk/docs/quickstart-debian-ubuntu
 
@@ -79,3 +79,4 @@ ARG SOURCE_COMMIT=""
 ENV IMAGE_REV=${SOURCE_BRANCH}-${SOURCE_COMMIT}
 RUN date +'%y%m%d_%H%M%S_%Z' > /build_date.txt
 RUN echo "export PATH=${PATH}" >> /root/.profile
+SHELL ["/bin/bash", "-c"]
