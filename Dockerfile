@@ -69,6 +69,7 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s
 ### cassandra cqlsh
 
 RUN pip install cqlsh
+ADD cqlshrc /root/.cassandra/cqlshrc
 
 ### cleanup
 
