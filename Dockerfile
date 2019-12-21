@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     g++ \
     gcc \
+    gettext-base \
     git \
     gnupg2 \
     jq \
