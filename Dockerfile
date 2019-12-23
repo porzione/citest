@@ -71,6 +71,13 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s
 RUN pip install cqlsh
 ADD cqlshrc /root/.cassandra/cqlshrc
 
+### docker, without daemon packages: docker-ce, containerd.io
+
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
+    && echo "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee -a /etc/apt/sources.list.d/docker.list \
+    && apt-get update \
+    && apt-get install docker-ce-cli
+
 ### cleanup
 
 RUN ln -s /usr/bin/vim.tiny /usr/local/bin/vim
