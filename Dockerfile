@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libc6-dev \
     make \
     ncdu \
+    net-tools \
     openssh-client \
     postgresql-client \
     procps \
@@ -68,7 +69,7 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s
 
 ### cassandra cqlsh
 
-RUN pip install cqlsh
+RUN pip install cqlsh ccm
 ADD cqlshrc /root/.cassandra/cqlshrc
 
 ### docker, without daemon packages: docker-ce, containerd.io
