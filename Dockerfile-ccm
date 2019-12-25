@@ -1,0 +1,25 @@
+# # vi: ft=dockerfile
+FROM porzione/npm-golang-psql-cqlsh-gcloud-kubectl
+
+### java https://adoptopenjdk.net/installation.html#x64_linux-jdk
+
+ARG JAVA_SUM=7b7884f2eb2ba2d47f4c0bf3bb1a2a95b73a3a7734bd47ebf9798483a7bcc423
+ARG JAVA_URL=https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u232-b09/OpenJDK8U-jdk_x64_linux_hotspot_8u232b09.tar.gz 
+RUN curl -L $JAVA_URL -o /tmp/OpenJDK8.tar.gz \
+    && tar xzf /tmp/OpenJDK8.tar.gz -C /opt \
+    && echo "$JAVA_SUM /tmp/OpenJDK8.tar.gz" | sha256sum -c - 
+ENV PATH="/opt/jdk8u232-b09/bin:$PATH"
+
+### ccm cluster
+
+ARG CASSANDRA_VER=3.11.5
+RUN ccm create --version $CASSANDRA_VER --nodes 3 test
+## later: ccm start --root
+
+### cleanup
+
+RUN rm /tmp/*.tar.gz
+
+ARG SOURCE_BRANCH=""
+ARG SOURCE_COMMIT=""
+RUN echo $(date +'%y%m%d_%H%M%S_%Z') ${SOURCE_BRANCH} ${SOURCE_COMMIT} > /build.txt
