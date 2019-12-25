@@ -1,6 +1,8 @@
 # vi: ft=dockerfile
 FROM porzione/citest
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 ### java https://adoptopenjdk.net/installation.html#x64_linux-jdk
 
 ARG JAVA_SUM=7b7884f2eb2ba2d47f4c0bf3bb1a2a95b73a3a7734bd47ebf9798483a7bcc423
