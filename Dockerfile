@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-pip \
     python-setuptools \
     python-wheel \
+    sudo \
     vim-tiny \
     wget \
     && true
