@@ -18,28 +18,16 @@ RUN ccm create --version $CASSANDRA_VER --nodes 3 test
 ### PostgreSQL
 
 ENV PG_VER=11
-ARG PG_CONF=/etc/postgresql/${PG_VER}/main/postgresql.conf
-ARG PG_HBA=/etc/postgresql/${PG_VER}/main/pg_hba.conf
-ARG PG_TMP=/var/run/postgresql/${PG_VER}-main.pg_stat_tmp
-ARG PG_DBUSER=test
-ARG PG_DBPASS=test
-ARG PG_DBNAME=test
+ENV PG_AUTH=trust
+ARG PG_CONF=/etc/postgresql/$PG_VER/main/postgresql.conf
 ARG PG_MAXCONN=500 
 ARG PG_PORT=5432
 
 RUN apt-get update && apt-get -y --no-install-recommends install postgresql-${PG_VER}
-RUN test -d ${PG_TMP} || sudo -u postgres mkdir ${PG_TMP} \
-    && echo "listen_addresses = '*'" >> ${PG_CONF} \
-    && echo "max_connections = ${PG_MAXCONN}" >> ${PG_CONF} \
-    && echo "host ${PG_DBNAME} ${PG_DBUSER} 0.0.0.0/0 md5" >> ${PG_HBA} \
-    && echo sed -i -E "s/#?port = [[:digit:]]+/port = ${PG_PORT}/" ${PG_CONF} \
-    && sudo -u postgres pg_ctlcluster $PG_VER main start \
-    && echo "Waiting PostgreSQL ${PG_VER} to launch on ${PG_PORT}..." \
-    && while ! sudo -u postgres pg_isready -p ${PG_PORT}; do sleep 0.5; done \
-    && echo "Creating user and database" \
-    && echo "CREATE USER ${PG_DBUSER} PASSWORD '${PG_DBPASS}'" | sudo -u postgres psql \
-    && echo "CREATE DATABASE ${PG_DBNAME} WITH OWNER=${PG_DBUSER}" | sudo -u postgres psql \
-    && sudo -u postgres pg_ctlcluster $PG_VER main stop
+RUN test -d $PG_TMP || sudo -u postgres mkdir -p $PG_TMP \
+    && echo "max_connections = $PG_MAXCONN" >> $PG_CONF \
+    && echo sed -i -E "s/#?port = [[:digit:]]+/port = $PG_PORT/" $PG_CONF
+ADD pg_hba.conf /
 
 ### daemon
 
