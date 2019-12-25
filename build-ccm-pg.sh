@@ -1,10 +1,12 @@
 #!/bin/bash
 
+set -e
+
 docker build \
        $@ \
-       -t citest-ccm . \
-       -f Dockerfile-ccm \
+       -t citest-ccm-pg . \
+       -f Dockerfile-ccm-pg \
        --build-arg=SOURCE_COMMIT=$(git rev-parse --short HEAD) \
        --build-arg=SOURCE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-docker tag citest-ccm porzione/citest-ccm
+docker tag citest-ccm-pg porzione/citest-ccm-pg
