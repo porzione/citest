@@ -88,5 +88,5 @@ RUN rm -rf /usr/share/man && apt-get clean && rm -rf /var/lib/apt/lists/ && rm -
 ARG SOURCE_BRANCH=""
 ARG SOURCE_COMMIT=""
 RUN echo $(date +'%y%m%d_%H%M%S_%Z') ${SOURCE_BRANCH} ${SOURCE_COMMIT} > /build.txt
-RUN echo "export PATH=${PATH}" >> /root/.profile
+RUN echo 'export PATH=${PATH}' >> /root/.profile
 SHELL ["/bin/bash", "-c"]
