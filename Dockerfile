@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     jq \
     less \
     libc6-dev \
+    lsb-release \
     make \
     ncdu \
     net-tools \
@@ -40,6 +41,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ARG NODEJS_VERSION=11.x
 RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION} | bash - && apt-get install -y nodejs
+
+### yarn stable https://yarnpkg.com/en/docs/install#debian-stable
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt update && apt install -y --no-install-recommends yarn
 
 ### OpenVPN doesn't work in CircleCI/LXC
 #   kmod \
