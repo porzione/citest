@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-pip \
     python-setuptools \
     python-wheel \
+    redis-tools \
     sudo \
     vim-tiny \
     wget \
