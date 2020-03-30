@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     uuid-runtime \
     vim-tiny \
     wget \
+    xz-utils \
     && true
 
 ### nodejs 8.x 10.x 11.x 12.x 13.x
