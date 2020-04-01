@@ -92,6 +92,20 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
     && apt-get update \
     && apt-get install docker-ce-cli
 
+### ffmpeg
+
+ARG FFMPEG_TAR=ffmpeg-git-amd64-static.tar.xz
+ARG FFMPEG_DOWNLOAD_URL=https://johnvansickle.com/ffmpeg/builds/${FFMPEG_TAR}
+ARG FFMPEG_DOWNLOAD_MD5=https://johnvansickle.com/ffmpeg/builds/${FFMPEG_TAR}.md5
+
+RUN curl -k -fsSL "$FFMPEG_DOWNLOAD_MD5" -o "${FFMPEG_TAR}.md5" \
+    && curl -k -fsSL "$FFMPEG_DOWNLOAD_URL" -o $FFMPEG_TAR \
+    && md5sum -c "${FFMPEG_TAR}.md5" \
+    && mkdir /tmp/ffmpeg \
+    && tar --wildcards --strip-components 1 -xJf $FFMPEG_TAR -C /tmp/ffmpeg \
+    && mv /tmp/ffmpeg/ffmpeg /tmp/ffmpeg/ffprobe /usr/local/bin \
+    && rm -rf $FFMPEG_TAR "${FFMPEG_TAR}.md5" /tmp/ffmpeg
+
 ### cleanup
 
 RUN ln -s /usr/bin/vim.tiny /usr/local/bin/vim
