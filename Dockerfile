@@ -34,6 +34,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-wheel \
     redis-tools \
     ruby \
+    ruby-faraday \
+    ruby-oj \
     sudo \
     uuid-runtime \
     vim-tiny \
