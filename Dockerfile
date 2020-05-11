@@ -45,7 +45,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ### nodejs 8.x 10.x 11.x 12.x 13.x
 
-ARG NODEJS_VERSION=13.x
+ARG NODEJS_VERSION=12.x
 RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION} | bash - && apt-get install -y nodejs
 
 ### yarn stable https://yarnpkg.com/en/docs/install#debian-stable
