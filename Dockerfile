@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     coreutils \
     curl \
+    ffmpeg \
     g++ \
     gcc \
     gettext-base \
@@ -23,6 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libc6-dev \
     lsb-release \
     make \
+    mediainfo \
     ncdu \
     net-tools \
     openssh-client \
