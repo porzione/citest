@@ -40,6 +40,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ruby-faraday \
     ruby-oj \
     sudo \
+    traceroute \
     uuid-runtime \
     vim-tiny \
     wget \
