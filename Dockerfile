@@ -65,20 +65,31 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 
 ### golang
 
-#ARG GOLANG_VERSION=1.13.5
-ARG GOLANG_VERSION=1.15.2
-ARG GOLANG_DOWNLOAD_URL=https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz
-#ARG GOLANG_DOWNLOAD_SHA256=512103d7ad296467814a6e3f635631bd35574cab3369a97a323c9a585ccaa569
-ARG GOLANG_DOWNLOAD_SHA256=b49fda1ca29a1946d6bb2a5a6982cf07ccd2aba849289508ee0f9918f6bb4552
+ARG GOLANG_VERSION_1=1.13.5
+ARG GOLANG_VERSION_2=1.15.2
+ARG GOLANG_DOWNLOAD_SHA256_1=512103d7ad296467814a6e3f635631bd35574cab3369a97a323c9a585ccaa569
+ARG GOLANG_DOWNLOAD_SHA256_2=b49fda1ca29a1946d6bb2a5a6982cf07ccd2aba849289508ee0f9918f6bb4552
+ARG GOLANG_DOWNLOAD_URL_1=https://golang.org/dl/go${GOLANG_VERSION_1}.linux-amd64.tar.gz
+ARG GOLANG_DOWNLOAD_URL_2=https://golang.org/dl/go${GOLANG_VERSION_2}.linux-amd64.tar.gz
+ARG GOLANG_DIR_1=/usr/local/go${GOLANG_VERSION_1}
+ARG GOLANG_DIR_2=/usr/local/go${GOLANG_VERSION_2}
 
-RUN curl -k -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
-    && echo "$GOLANG_DOWNLOAD_SHA256  golang.tar.gz" | sha256sum -c - \
-    && tar -C /usr/local -xzf golang.tar.gz \
+RUN curl -k -fsSL "$GOLANG_DOWNLOAD_URL_1" -o golang.tar.gz \
+    && echo "$GOLANG_DOWNLOAD_SHA256_1  golang.tar.gz" | sha256sum -c - \
+    && mkdir -p $GOLANG_DIR_1 \
+    && tar -C $GOLANG_DIR_1 -xzf golang.tar.gz --strip-components=1 \
+    && rm golang.tar.gz
+
+RUN curl -k -fsSL "$GOLANG_DOWNLOAD_URL_2" -o golang.tar.gz \
+    && echo "$GOLANG_DOWNLOAD_SHA256_2  golang.tar.gz" | sha256sum -c - \
+    && mkdir -p $GOLANG_DIR_2 \
+    && tar -C $GOLANG_DIR_2 -xzf golang.tar.gz --strip-components=1 \
     && rm golang.tar.gz
 
 ENV GOPATH=/go
-ENV PATH="$GOPATH/bin:/usr/local/go/bin:$PATH"
 RUN mkdir -p $GOPATH/src" $GOPATH/bin" && chmod -R 755 $GOPATH
+ENV PATH="$GOPATH/bin:$PATH"
+#ENV PATH="/usr/local/go/bin:$PATH"
 
 ### google cloud sdk https://cloud.google.com/sdk/docs/quickstart-debian-ubuntu
 
