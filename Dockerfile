@@ -24,7 +24,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libc6-dev \
     lsb-release \
     make \
-    mediainfo \
     ncdu \
     net-tools \
     openssh-client \
@@ -46,6 +45,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     xz-utils \
     && true
+
+### latest mediainfo
+
+RUN wget https://mediaarea.net/repo/deb/repo-mediaarea_1.0-16_all.deb \
+    && dpkg -i repo-mediaarea_1.0-16_all.deb \
+    && apt-get update \
+    && apt-get install -y mediainfo
 
 ### nodejs 8.x 10.x 11.x 12.x 13.x
 
