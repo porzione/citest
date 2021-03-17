@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     gnupg2 \
     jq \
+    ldnsutils \
     less \
     libc6-dev \
     lsb-release \
