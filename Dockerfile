@@ -13,7 +13,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     coreutils \
     curl \
-    ffmpeg \
     g++ \
     gcc \
     gettext-base \
@@ -35,6 +34,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-pip \
     python-setuptools \
     python-wheel \
+    python3-pip \
+    python3-setuptools \
+    python3-wheel \
     redis-tools \
     ruby \
     ruby-faraday \
@@ -47,12 +49,23 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     xz-utils \
     && true
 
+### python alternatives
+### TODO: set v3 as default for oci, but ccm tested with v2
+
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1 \
+    && update-alternatives --install /usr/bin/python python /usr/bin/python2.7 2 \
+    && update-alternatives --set python /usr/bin/python3.7
+
 ### latest mediainfo
 
-RUN wget https://mediaarea.net/repo/deb/repo-mediaarea_1.0-16_all.deb \
-    && dpkg -i repo-mediaarea_1.0-16_all.deb \
+
+ARG MEDIAAREA_DEB=repo-mediaarea_1.0-16_all.deb
+ARG MEDIAAREA_URL=https://mediaarea.net/repo/deb/${MEDIAAREA_DEB}
+RUN wget $MEDIAAREA_URL \
+    && dpkg -i $MEDIAAREA_DEB \
     && apt-get update \
-    && apt-get install -y mediainfo
+    && apt-get install -y mediainfo \
+    && rm $MEDIAAREA_DEB
 
 ### nodejs 8.x 10.x 11.x 12.x 13.x
 
@@ -64,11 +77,6 @@ RUN curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION} | bash - && apt-
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     && apt update && apt install -y --no-install-recommends yarn
-
-### OpenVPN doesn't work in CircleCI/LXC
-#   kmod \
-#   openvpn \
-#   iputils-ping \
 
 ### golang
 
@@ -108,7 +116,7 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s
 
 ### cassandra cqlsh
 
-RUN pip install cqlsh ccm
+RUN pip2 install cqlsh ccm
 ADD cqlshrc /root/.cassandra/cqlshrc
 
 ### docker, without daemon packages: docker-ce, containerd.io
