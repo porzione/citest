@@ -141,6 +141,24 @@ RUN curl -k -fsSL "$FFMPEG_DOWNLOAD_MD5" -o "${FFMPEG_TAR}.md5" \
     && mv /tmp/ffmpeg/ffmpeg /tmp/ffmpeg/ffprobe /usr/local/bin \
     && rm -rf $FFMPEG_TAR "${FFMPEG_TAR}.md5" /tmp/ffmpeg
 
+### java https://adoptopenjdk.net/installation.html#x64_linux-jdk
+
+ARG JAVA_TAR=OpenJDK8U-jdk_x64_linux_hotspot_8u292b10.tar.gz
+ARG JAVA_SUM=${JAVA_TAR}.sha256.txt
+ARG JAVA_BASE_URL=https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u292-b10
+ARG JAVA_URL=${JAVA_BASE_URL}/${JAVA_TAR}
+ARG JAVA_SUM_URL=${JAVA_BASE_URL}/${JAVA_SUM}
+RUN cd /tmp ; \
+    curl -LfsS $JAVA_SUM_URL -o $JAVA_SUM ; \
+    curl -LfsS $JAVA_URL -o $JAVA_TAR ; \
+    ls -l /tmp ; \
+    sha256sum -c $JAVA_SUM ; \
+    mkdir -p /opt/java/openjdk ; \
+    cd /opt/java/openjdk ; \
+    tar -xf /tmp/$JAVA_TAR --strip-components=1
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH=$JAVA_HOME/bin:$PATH
+
 ### cleanup
 
 RUN ln -s /usr/bin/vim.tiny /usr/local/bin/vim
